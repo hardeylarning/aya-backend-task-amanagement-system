@@ -3,11 +3,16 @@ import mongoose from "mongoose";
 const taskSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, "task body is required"]
+        required: [true, "Task is required"]
     },
     userId: {
         type: String,
         required: [true, "User ID is required"]
+    },
+    status: {
+        type: String,
+        enum: ["created", "in progress", "completed"],
+        default: "created"
     },
     isCompleted: {
         type: Boolean,
