@@ -1,8 +1,7 @@
-import User from "../model/users/UserModel.js";
+import User from "../model/users/user-model.js";
 
 import bcrypt from 'bcrypt'
 import generateToken from "../util/jwt/generate-token.js";
-import { getTokenFromHeader } from "../util/jwt/get-token.js";
 
 export const userRegisterController = async (req, res) => {
   const { firstname, lastname, email, password } = req.body;
@@ -115,15 +114,21 @@ export const userForgotPasswordController = async (req, res) => {
   const {email} = req.params
   const {password} = req.body
   try {
-    const foundUser = await User.findOne(email)
+    const foundUser = await User.findOne({email})
     if(!foundUser) return res.json({status: "error", message: "No user found for the email passed!"})
 
-    const user = User.updateOne(password, {
-      $set: {password: password}
+    const salt = await bcrypt.genSalt(10)
+    const passwordHash = await bcrypt.hash(password, salt)
+
+    const user = await User.updateOne({email: foundUser.email}, {
+      $set: {password: passwordHash}
     })
+
+    if (!user) return res.json({status: "error", message: "Network Error!"})
+
     res.json({
       status: "sucess",
-      data: `Dear ${user.firstname}, your profile has been updated sucessfully`,
+      data: `Dear ${foundUser.firstname}, your password has been changed sucessfully`,
     });
   } catch (error) {
     res.json(error.message);

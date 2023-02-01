@@ -1,6 +1,7 @@
 import express from "express";
 import {
   userDeleteController,
+  userForgotPasswordController,
   userGetController,
   userLoginController,
   userRegisterController,
@@ -14,13 +15,13 @@ const userRoute = express.Router();
 userRoute.post("/login", userLoginController);
 userRoute.post("/register", userRegisterController);
 
-userRoute.get("/", usersController);
-
-// userRoute.get("/:id", userGetController);
+userRoute.get("/", isLoggedIn, usersController);
 
 userRoute.get("/profile", isLoggedIn, userGetController);
 
-userRoute.put("/:id", userUpdateController);
+userRoute.put("/", isLoggedIn, userUpdateController);
+
+userRoute.put("/reset-password/:email", userForgotPasswordController);
 
 userRoute.delete("/:id", userDeleteController);
 
