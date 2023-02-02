@@ -24,7 +24,7 @@ taskRoute.get("/:id", isLoggedIn, getTaskController);
 taskRoute.put("/:id", isLoggedIn, updateTaskController);
 
 taskRoute.get("/user-tasks/not-completed", isLoggedIn, getUserTasksNotCompletedController);
-
+ 
 taskRoute.get("/user-tasks/all", isLoggedIn, getUserTasksController);
 
 taskRoute.delete("/:id", isLoggedIn, deleteTaskController);

@@ -2,7 +2,7 @@ import Task from "../model/tasks/task-model.js";
 import User from "../model/users/user-model.js";
 
 export const newTaskController = async (req, res) => {
-  const { name, status } = req.body;
+  const { name, status, userId } = req.body;
   try {
     const userFound = await User.findOne({ _id: req.userAuth });
     if (!userFound) return res.json({ status: "error", message: "Oop! Invalid credential, kindly login before accessing this page" });
@@ -13,7 +13,7 @@ export const newTaskController = async (req, res) => {
  
     const task = await Task.create({
       name,
-      userId: req.userAuth,
+      userId: userId ? userId : req.userAuth,
       status
     });
 
@@ -21,12 +21,7 @@ export const newTaskController = async (req, res) => {
 
     res.json({
       status: "sucess",
-      data: {
-        id: task._id,
-        name: task.name,
-        status: task.status,
-        isCompleted: task.isCompleted
-      },
+      data: task,
     });
   } catch (error) {
     res.json(error.message);
