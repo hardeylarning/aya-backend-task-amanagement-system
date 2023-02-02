@@ -82,6 +82,21 @@ export const userGetController = async (req, res) => {
       res.json(error.message);
     }
   };
+export const userGetByEmailController = async (req, res) => {
+  const {email} = req.params
+  try {
+    const foundUser = await User.findOne({email})
+    if(!foundUser) return res.json({status: "error", message: "No user found for the email passed!"})
+
+      res.json({
+        status: "sucess",
+        data: foundUser,
+      });
+
+    } catch (error) {
+      res.json(error.message);
+    }
+  };
   
   export const userDeleteController = async (req, res) => {
     try {
