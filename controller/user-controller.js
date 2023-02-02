@@ -21,7 +21,7 @@ export const userRegisterController = async (req, res) => {
     });
 
     res.json({
-      status: "sucess",
+      status: "success",
       data: user,
     });
   } catch (error) {
@@ -40,7 +40,7 @@ export const userLoginController = async (req, res) => {
     if(!foundPassword) return res.json({message: "Incorrect email or password!"})
 
     res.json({
-      status: "sucess",
+      status: "success",
       data: {
         firstname: foundUser.firstname,
         lastname: foundUser.lastname,
@@ -58,7 +58,7 @@ export const usersController = async (req, res) => {
   try {
     const users = await User.find({})
     res.json({
-      status: "sucess",
+      status: "success",
       data: users,
     });
   } catch (error) {
@@ -74,7 +74,7 @@ export const userGetController = async (req, res) => {
         if(!foundUser) return res.json({status: "error", message: "No user found for the id passed!"})
 
       res.json({
-        status: "sucess",
+        status: "success",
         data: foundUser,
       });
 
@@ -89,7 +89,7 @@ export const userGetByEmailController = async (req, res) => {
     if(!foundUser) return res.json({status: "error", message: "No user found for the email passed!"})
 
       res.json({
-        status: "sucess",
+        status: "success",
         data: foundUser,
       });
 
@@ -101,7 +101,7 @@ export const userGetByEmailController = async (req, res) => {
   export const userDeleteController = async (req, res) => {
     try {
       res.json({
-        status: "sucess",
+        status: "success",
         data: "deleted sucessfully",
       });
     } catch (error) {
@@ -118,8 +118,8 @@ export const userUpdateController = async (req, res) => {
     if(!foundUser) return res.json({status: "error", message: "No user found for the id passed!"})
 
     res.json({
-      status: "sucess",
-      data: `Dear ${foundUser.firstname}, your profile has been updated sucessfully`,
+      status: "success",
+      data: `Dear ${foundUser.firstname}, your profile has been updated successfully`,
     });
   } catch (error) {
     res.json(error.message);
@@ -143,7 +143,7 @@ export const userForgotPasswordController = async (req, res) => {
     if (!user) return res.json({status: "error", message: "Network Error!"})
 
     res.json({
-      status: "sucess",
+      status: "success",
       data: `Dear ${foundUser.firstname}, your password has been changed sucessfully`,
     });
   } catch (error) {
