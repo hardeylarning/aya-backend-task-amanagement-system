@@ -2,7 +2,7 @@ import Task from "../model/tasks/task-model.js";
 import User from "../model/users/user-model.js";
 
 export const newTaskController = async (req, res) => {
-  const { name, status, userId } = req.body;
+  const { name, status, userId, startDate, endDate } = req.body;
   try {
     const userFound = await User.findOne({ _id: req.userAuth });
     if (!userFound) return res.json({ status: "error", message: "Oop! Invalid credential, kindly login before accessing this page" });
@@ -14,7 +14,9 @@ export const newTaskController = async (req, res) => {
     const task = await Task.create({
       name,
       userId: userId ? userId : req.userAuth,
-      status
+      status,
+      startDate,
+      endDate
     });
 
     if (!task) return res.json({status: "error", message: "Network Error!"})
@@ -99,14 +101,14 @@ export const getTaskController = async (req, res) => {
 
 export const updateTaskController = async (req, res) => {
   const {id} = req.params;
-  const { name, status } = req.body
+  const { name, status, startDate, endDate } = req.body
   try {
 
     let {isCompleted} = false
     if(status === 'completed') isCompleted = true
 
 
-    const foundTask = await Task.findOneAndUpdate({_id: id}, {name, status, isCompleted}, {
+    const foundTask = await Task.findOneAndUpdate({_id: id}, {name, status, isCompleted, startDate, endDate}, {
       new: true,
       runValidators: true
     })
