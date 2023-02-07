@@ -22,7 +22,7 @@ export const newTaskController = async (req, res) => {
     if (!task) return res.json({status: "error", message: "Network Error!"})
 
     res.json({
-      status: "sucess",
+      status: "success",
       data: task,
     });
   } catch (error) {
@@ -34,7 +34,7 @@ export const tasksController = async (req, res) => {
   try {
     const tasks = await Task.find({})
     res.json({
-      status: "sucess",
+      status: "success",
       data: tasks,
     });
   } catch (error) {
@@ -47,7 +47,7 @@ export const getUserTasksController = async (req, res) => {
   try {
     const tasks = await Task.find({userId: userId})
     res.json({
-      status: "sucess",
+      status: "success",
       data: tasks,
     });
   } catch (error) {
@@ -60,7 +60,7 @@ export const getUserTasksNotCompletedController = async (req, res) => {
   try {
     const tasks = await Task.find({userId: userId, isCompleted: false})
     res.json({
-      status: "sucess",
+      status: "success",
       data: tasks,
     });
   } catch (error) {
@@ -75,7 +75,7 @@ export const getTaskController = async (req, res) => {
         if(!foundTask) return res.json({status: "error", message: "Task not found!"})
 
       res.json({
-        status: "sucess",
+        status: "success",
         data: foundTask,
       });
 
@@ -91,7 +91,7 @@ export const getTaskController = async (req, res) => {
       if(!task) return res.json({status: "error", message: "Task not found!"})
 
       res.json({
-        status: "sucess",
+        status: "success",
         data: task,
       });
     } catch (error) {
@@ -115,7 +115,7 @@ export const updateTaskController = async (req, res) => {
     if(!foundTask) return res.json({status: "error", message: "No task found!"})
 
     res.json({
-      status: "sucess",
+      status: "success",
       data: `${foundTask.name}, has been updated sucessfully`,
     });
   } catch (error) {
@@ -137,7 +137,7 @@ export const patchTaskController = async (req, res) => {
     if(!foundTask) return res.json({status: "error", message: "No task found!"})
 
     res.json({
-      status: "sucess",
+      status: "success",
       data: `${foundTask.name}, completion has been changed to ${isCompleted}`,
     });
   } catch (error) {
